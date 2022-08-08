@@ -1,5 +1,5 @@
 let $buttons = document.querySelectorAll("button");
-let ui = document.querySelector(".input");
+let input = document.querySelector(".input");
 let total = document.querySelector(".total");
 
 let valOne = [];
@@ -41,7 +41,7 @@ let finalAnswer = 0;
                 }
                         else {
                         valOne.push(this.innerText);
-                        ui.textContent = valOne.join("");
+                        input.textContent = valOne.join("");
                         console.log(valOne);
                         }
                          break;
@@ -50,12 +50,12 @@ let finalAnswer = 0;
 })
 
 function ErrorInput(){
-    ui.textContent = "";
+    input.textContent = "";
     total.textContent = "Error, coba lagi"
     setTimeout (clearDisplay ,2000)
 }
 function clearDisplay() {
-    ui.textContent = "";
+    input.textContent = "";
     total.textContent = ""
     valOne = [];
     valTwo = [];
@@ -66,16 +66,19 @@ function makeCalculation() {
         finalAnswer = eval(valTwo + operator + valOne.join(""));
         total .textContent = "";
         total.textContent = eval(finalAnswer).toFixed(2);
-        ui.textContent = "";
+        input.textContent = "";
         valTwo = eval(finalAnswer);
         valOne = [];
     } else if (operator.length == 0) {
-        total.textContent = "NaN, coba lagi.";}
+        total.textContent = "Error, coba lagi.";
+    } else if(finalAnswer == false){
+        total.textContent = "NaN, coba lagi."
+    }
     else {
         finalAnswer = finalAnswer = eval(valTwo + operator + valOne.join(""));
         console.log(finalAnswer);
         total.textContent = "";
-        ui.textContent = "";
+        input.textContent = "";
         total.textContent = eval(finalAnswer).toFixed(2);
         valTwo = eval(finalAnswer);
         valOne = [];
@@ -83,16 +86,14 @@ function makeCalculation() {
 }
 
 function storeValue() {
-        if (valOne.length == 0 && valTwo.length==0) {
-            total.textContent = "NaN, coba lagi ya.";
-        } else if (valTwo.length > 0) {
+        if (valOne.length == 0 && valTwo.length == 0 ) {
+            return false;
+        }else if (valTwo.length > 0) {
             total.textContent = valTwo + " " + operator;
-        }else if(valTwo.length==0) {
+        }else if(valTwo.length == 0) {
             valTwo.push(valOne.join(""));
             valOne = [];
-            ui.textContent = "";
-            total.textContent = "";
-            total.textContent = valTwo + " " + operator;
+            input.textContent = "";
         }
         total.textContent = valTwo + " " + operator;
 }
